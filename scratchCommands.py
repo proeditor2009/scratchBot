@@ -12,7 +12,7 @@ commandPre = ''
 followLast = ''
 followSecond = ''
 swap = 0
-def scratchCheck(USER, PASSWORD):
+def scratchCheck(BOTUSER, USER, PASSWORD):
     global askerPre
     global commandPre
     global followLast
@@ -62,7 +62,7 @@ def scratchCheck(USER, PASSWORD):
         t = requests.get("https://scratch.mit.edu/users/" + username)
         if username not in following and t.status_code != 404:
             try:
-                scratch = scratchapi.ScratchUserSession(USER, PASSWORD)
+                scratch = scratchapi.ScratchUserSession(BOTUSER, PASSWORD)
                 scratch.users.follow(username)
             except:
                 pass
@@ -91,7 +91,7 @@ def scratchCheck(USER, PASSWORD):
                 title = y["title"]
                 creator = y["author"]["username"]
                 try:
-                    scratch = scratchapi.ScratchUserSession(USER, PASSWORD)
+                    scratch = scratchapi.ScratchUserSession(BOTUSER, PASSWORD)
                     scratch.users.comment(asker.text, "[ScratchBot]: Info for \"" + title + "\" by " + creator + ": Views: " + str(views) + "--- Loves: " + str(loves) + " --- Favorites: " + str(favorites))
                     scratch.users.follow(asker.text)
                     scratch.users.follow(y["author"]["username"])
@@ -109,7 +109,7 @@ def scratchCheck(USER, PASSWORD):
     y = json.loads(r.text)
     if y["community_most_loved_projects"][0]["creator"] != followLast:
         try:
-            scratch = scratchapi.ScratchUserSession(USER, PASSWORD)
+            scratch = scratchapi.ScratchUserSession(BOTUSER, PASSWORD)
             scratch.users.follow(y["community_most_loved_projects"][0]["creator"])
         except:
             pass
@@ -124,7 +124,7 @@ def scratchCheck(USER, PASSWORD):
             try:
                 user = d[random.randint(0, 1)]["username"]
                 if user != followSecond:
-                    scratch = scratchapi.ScratchUserSession(USER, PASSWORD)
+                    scratch = scratchapi.ScratchUserSession(BOTUSER, PASSWORD)
                     scratch.users.follow(user)
                     print("Followed " + user)
                     followSecond = user
