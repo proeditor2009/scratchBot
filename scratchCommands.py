@@ -19,7 +19,7 @@ def scratchCheck(USER, PASSWORD):
     global followSecond
     global swap
     parse = []
-    r = requests.get("https://scratch.mit.edu/site-api/comments/user/-Snipet-")
+    r = requests.get("https://scratch.mit.edu/site-api/comments/user/" + USER)
     soup = BeautifulSoup(r.text, "html.parser")
     command = soup.findAll("div", {'class':'content'})[0]
     asker = soup.findAll("a")[1]
