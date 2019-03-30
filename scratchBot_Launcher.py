@@ -38,5 +38,5 @@ print("\nStarting... ")
 
 
 while True:
-    scratchCommands.scratchCheck("-Snipet_Test", "-Snipet-", "seanfunk")
+    scratchCommands.scratchCheck("BOT", "REG ACCOUNT", "PASSWORD")
     time.sleep(5)
