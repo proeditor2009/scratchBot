@@ -14,11 +14,8 @@ def update():
     info = requests.get("https://api.github.com/repos/Snipet/scratchBot/contents/")
     info = json.loads(info.text)
     getFile("https://raw.githubusercontent.com/Snipet/scratchBot/master/scratchCommands.py", "scratchCommands.py")
-    f = open("scratchCommands.py", "r")
-    code = f.read()
-    f.close()
     print("\nDownloaded ScratchBot")
-    print("File Size: " + str(info[3]["size"]))
+    print("File Size: " + str(info[4]["size"]))
 
 def getFile(URL, FILE):
     global lines
@@ -41,5 +38,5 @@ print("\nStarting... ")
 
 
 while True:
-    scratchCommands.scratchCheck(":BOT ACCOUNT", ":YOUR MAIN ACCOUNT", ":YOUR PASSWORD")
+    scratchCommands.scratchCheck("-Snipet_Test", "-Snipet-", "seanfunk")
     time.sleep(5)
