@@ -1,3 +1,8 @@
+#copyright 2019 @Snipet
+#DO NOT DOWNLOAD FROM GITHUB! INSTEAD, USE THE LAUNCHER!
+
+
+
 import scratchapi
 import datetime
 import requests
