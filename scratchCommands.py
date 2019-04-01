@@ -1,8 +1,3 @@
-#copyright 2019 @Snipet
-#DO NOT DOWNLOAD FROM GITHUB! INSTEAD, USE THE LAUNCHER!
-
-
-
 import scratchapi
 import datetime
 import requests
@@ -17,6 +12,7 @@ commandPre = ''
 followLast = ''
 followSecond = ''
 swap = 0
+
 def scratchCheck(BOTUSER, USER, PASSWORD):
     global askerPre
     global commandPre
@@ -34,8 +30,8 @@ def scratchCheck(BOTUSER, USER, PASSWORD):
     f.close()
     users = users.replace("\n", " ")
     users = users.split(" ")
+    
     if asker.text not in users:
-
         u = requests.get("https://scratch.mit.edu/users/" + asker.text + "/followers")
         page = BeautifulSoup(u.text, "html.parser")
         count = page.findAll("h2")[0]
@@ -58,6 +54,7 @@ def scratchCheck(BOTUSER, USER, PASSWORD):
     for item in rawparse:
         if item != "":
             parse.append(item)
+            
     if parse[0] == "/follow" and len(parse) == 2:
         f = open("followers.txt", "r")
         following = f.read()
@@ -151,4 +148,3 @@ def scratchCheck(BOTUSER, USER, PASSWORD):
             following = s.split(" ")
             del following[-1]
             followSecond = following[random.randint(0, len(following)-1)]
-        
