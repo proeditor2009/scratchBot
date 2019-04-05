@@ -1,17 +1,24 @@
 import requests
 import json
 import time
-import sys
 import scratchCommands
 
 def update():
-    print("Getting most recent version...")
-    info = requests.get("https://api.github.com/repos/BonfireScratch/scratchBot/contents/")
-    info = json.loads(info.text)
+    version = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")
+    print("Downloading most recent version (" + version + ")")
+    info = json.loads(requests.get("https://api.github.com/repos/BonfireScratch/scratchBot/contents/"))
     getFile("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/scratchCommands.py", "scratchCommands.py")
     print("ScratchBot has been downloaded")
 
 def getFile(URL, FILE):
+    lines = getFileContents(URL)
+    open(FILE, 'w').close()
+    f = open(FILE, "a")
+    for line in lines:
+        f.write(line + "\n")
+    f.close()
+
+def getFileContents(URL):
     r = requests.get(URL)
     online = r.text
     code = r.text
@@ -19,12 +26,8 @@ def getFile(URL, FILE):
     lines = []
     for line in code:
         lines.append(line.replace("\r", ""))
-    open(FILE, 'w').close()
-    f = open(FILE, "a")
-    for line in lines:
-        f.write(line + "\n")
-    f.close()
-
+    return lines
+    
 def main():
     while True:
         scratchCommands.scratchCheck("BOT", "REG ACCOUNT", "PASSWORD")
