@@ -5,6 +5,7 @@ import time
 import scratchCommands
 
 def update():
+    sql = sqlite3.connect('version.db')
     mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")
     print("Downloading most recent version (" + version + ")")
     info = json.loads(requests.get("https://api.github.com/repos/BonfireScratch/scratchBot/contents/"))
