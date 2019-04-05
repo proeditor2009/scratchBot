@@ -6,6 +6,8 @@ import scratchCommands
 
 def update():
     sql = sqlite3.connect('version.db')
+    cursor = sql.cursor()
+    sql.execute("CREATE TABLE if not exists Data(Version TEXT NOT NULL, Username TEXT NOT NULL, Password TEXT NOT NUL);")
     mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")
     print("Downloading most recent version (" + version + ")")
     info = json.loads(requests.get("https://api.github.com/repos/BonfireScratch/scratchBot/contents/"))
