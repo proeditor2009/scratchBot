@@ -10,8 +10,7 @@ global cursor
 
 def update():
     cursor.execute("CREATE TABLE if not exists Data(Version TEXT NOT NULL, Username TEXT NOT NULL, Password TEXT NOT NUL);")
-    cursor.execute("INSERT INTO Data (Version) " +
-                             "VALUES ('" + mostRecentVersion + "')
+    cursor.execute("INSERT INTO Data (Version) " + "VALUES ('" + mostRecentVersion + "'))
     print("Downloading most recent version (" + mostRecentVersion + ")")
     info = json.loads(requests.get("https://api.github.com/repos/BonfireScratch/scratchBot/contents/"))
     getFile("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/scratchCommands.py", "scratchCommands.py")
