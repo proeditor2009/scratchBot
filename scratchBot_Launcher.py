@@ -1,10 +1,11 @@
+import sqlite3
 import requests
 import json
 import time
 import scratchCommands
 
 def update():
-    version = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")
+    mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")
     print("Downloading most recent version (" + version + ")")
     info = json.loads(requests.get("https://api.github.com/repos/BonfireScratch/scratchBot/contents/"))
     getFile("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/scratchCommands.py", "scratchCommands.py")
