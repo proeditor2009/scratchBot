@@ -3,13 +3,15 @@ import requests
 import json
 import time
 import scratchCommands
+global mostRecentVersion
 
 def update():
     sql = sqlite3.connect('version.db')
     cursor = sql.cursor()
     sql.execute("CREATE TABLE if not exists Data(Version TEXT NOT NULL, Username TEXT NOT NULL, Password TEXT NOT NUL);")
-    mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")
-    print("Downloading most recent version (" + version + ")")
+    sql.execute("INSERT INTO Data (Version) " +
+                             "VALUES ('" + mostRecentVersion + "')
+    print("Downloading most recent version (" + mostRecentVersion + ")")
     info = json.loads(requests.get("https://api.github.com/repos/BonfireScratch/scratchBot/contents/"))
     getFile("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/scratchCommands.py", "scratchCommands.py")
     print("ScratchBot has been downloaded")
@@ -36,6 +38,8 @@ def main():
     while True:
         scratchCommands.scratchCheck("BOT", "REG ACCOUNT", "PASSWORD")
         time.sleep(5)
-    
-update()
+
+mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")
+if mostRecentVersion != :
+    update()
 main()
