@@ -11,6 +11,6 @@ def userExists(USER):
     response = json.loads(requests.post('https://api.scratchstats.com/scratch/users/' + USER))
     try:
         x = response['id']
-    expect:
+    except:
         return False
     return True
