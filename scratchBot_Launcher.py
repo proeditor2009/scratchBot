@@ -37,13 +37,27 @@ def getVersion():
 def setVersion(v):
     j = {
         "version": v,
-        "username": "",
-        "password": ""
     }
     
     f = open("version.json", "w")
     f.write(json.dumps(j))
     f.close()
+    
+def askForData:
+    user = input("Enter the bot's username > ")
+    pas = input("Enter the bot's password > ")
+    
+    j = {
+        "username": user,
+        "password": pas
+    }
+    
+    f = open("version.json", "a")
+    f.write(json.dumps(j))
+    f.close()
+    
+def getBotData():
+    pass
     
 def main():
     try:
@@ -56,7 +70,10 @@ def main():
     myVersion = getVersion()
     if mostRecentVersion != myVerion:
         update()
+        askForData()
         
+    getBotData()
+    
     while True:
         scratchCommands.scratchCheck("BOT", "REG ACCOUNT", "PASSWORD")
         time.sleep(5)
