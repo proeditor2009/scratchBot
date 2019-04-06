@@ -84,7 +84,7 @@ def main():
     getBotData()
     
     while True:
-        scratchCommands.scratchCheck("BOT", "REG ACCOUNT", "PASSWORD")
+        scratchCommands.scratchCheck(username, password)
         time.sleep(5)
 
 main()
