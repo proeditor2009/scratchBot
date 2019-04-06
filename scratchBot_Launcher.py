@@ -9,6 +9,7 @@ global myVersion
 def update():
     print("Downloading most recent version (" + mostRecentVersion + ")")
     getFile("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/scratchCommands.py", "scratchCommands.py")
+    setVersion(mostRecentVersion)
     print("ScratchBot has been downloaded")
 
 def getFile(URL, FILE):
@@ -33,9 +34,9 @@ def getVersion():
     f = json.loads(f.read())
     return f["version"]
   
-def createJsonFile():
+def setVersion(v):
     j = {
-        "version": "0",
+        "version": v,
         "username": "",
         "password": ""
     }
@@ -49,7 +50,7 @@ def main():
         f = open("version.json")
         f.close()
     except:
-        createJsonFile()
+        setVersion(0)
         
     mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")
     myVersion = getVersion()
