@@ -38,6 +38,9 @@ def main():
         scratchCommands.scratchCheck("BOT", "REG ACCOUNT", "PASSWORD")
         time.sleep(5)
 
+f = open("version.json", "w")
+f.write("...")
+f.close()
 mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")
 myVersion = getVersion()
 if mostRecentVersion != myVerion:
