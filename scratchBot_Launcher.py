@@ -4,6 +4,7 @@ import time
 import scratchCommands
 
 global mostRecentVersion
+global myVersion
 
 def update():
     print("Downloading most recent version (" + mostRecentVersion + ")")
@@ -26,6 +27,11 @@ def getFileContents(URL):
     for line in code:
         lines.append(line.replace("\r", ""))
     return lines
+
+def getVersion():
+    f = open("version.json", "r")
+    f = json.loads(f.read())
+    return f["version"]
     
 def main():
     while True:
@@ -33,6 +39,7 @@ def main():
         time.sleep(5)
 
 mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")
-if mostRecentVersion != :
+myVersion = getVersion()
+if mostRecentVersion != myVerion:
     update()
 main()
