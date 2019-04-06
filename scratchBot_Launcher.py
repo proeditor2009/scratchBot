@@ -5,6 +5,8 @@ import scratchCommands
 
 global mostRecentVersion
 global myVersion
+global username
+global password
 
 def update():
     print("Downloading most recent version (" + mostRecentVersion + ")")
@@ -31,8 +33,10 @@ def getFileContents(URL):
 
 def getVersion():
     f = open("version.json", "r")
-    f = json.loads(f.read())
-    return f["version"]
+    f = f.read()
+    j = json.loads(f)
+    f.close()
+    return j["version"]
   
 def setVersion(v):
     j = {
@@ -57,7 +61,12 @@ def askForData:
     f.close()
     
 def getBotData():
-    pass
+    f = open("version.json", "r")
+    f = f.read()
+    j = json.loads(f)
+    f.close()
+    username = j["username"]
+    password = j["password"]
     
 def main():
     try:
@@ -71,7 +80,7 @@ def main():
     if mostRecentVersion != myVerion:
         update()
         askForData()
-        
+    
     getBotData()
     
     while True:
