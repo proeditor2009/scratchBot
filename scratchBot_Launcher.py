@@ -45,13 +45,19 @@ def createJsonFile():
     f.close()
     
 def main():
+    try:
+        f = open("version.json")
+        f.close()
+    except:
+        createJsonFile()
+        
+    mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")
+    myVersion = getVersion()
+    if mostRecentVersion != myVerion:
+        update()
+        
     while True:
         scratchCommands.scratchCheck("BOT", "REG ACCOUNT", "PASSWORD")
         time.sleep(5)
-        
-createJsonFile()
-mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")
-myVersion = getVersion()
-if mostRecentVersion != myVerion:
-    update()
+
 main()
