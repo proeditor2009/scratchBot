@@ -32,15 +32,24 @@ def getVersion():
     f = open("version.json", "r")
     f = json.loads(f.read())
     return f["version"]
+  
+def createJsonFile():
+    j = {
+        "version": "0",
+        "username": "",
+        "password": ""
+    }
+    
+    f = open("version.json", "w")
+    f.write(json.dumps(j))
+    f.close()
     
 def main():
     while True:
         scratchCommands.scratchCheck("BOT", "REG ACCOUNT", "PASSWORD")
         time.sleep(5)
-
-f = open("version.json", "w")
-f.write("...")
-f.close()
+        
+createJsonFile()
 mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")
 myVersion = getVersion()
 if mostRecentVersion != myVerion:
