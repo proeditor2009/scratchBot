@@ -1,7 +1,7 @@
 import requests
 import json
 
-def scratchCheck(BOTUSER, USER, PASSWORD):
+def scratchCheck(USER, PASSWORD):
     if userExists(USER):
         print("user exists")
     else:
