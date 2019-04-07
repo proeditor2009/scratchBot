@@ -1,34 +1,81 @@
 import requests
 import json
 import time
-import sys
 import scratchCommands
 
+global mostRecentVersion
+global myVersion
+
+
 def update():
-    print("Getting most recent version...")
-    info = requests.get("https://api.github.com/repos/BonfireScratch/scratchBot/contents/")
-    info = json.loads(info.text)
+    print("Downloading most recent version (" + mostRecentVersion + ")")
     getFile("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/scratchCommands.py", "scratchCommands.py")
+    setVersion(mostRecentVersion)
     print("ScratchBot has been downloaded")
 
 def getFile(URL, FILE):
-    r = requests.get(URL)
-    online = r.text
-    code = r.text
-    code = code.split("\n")
-    lines = []
-    for line in code:
-        lines.append(line.replace("\r", ""))
+    lines = getFileContents(URL)
     open(FILE, 'w').close()
     f = open(FILE, "a")
     for line in lines:
         f.write(line + "\n")
     f.close()
 
-def main():
-    while True:
-        scratchCommands.scratchCheck("BOT", "REG ACCOUNT", "PASSWORD")
-        time.sleep(5)
+def getFileContents(URL):
+    r = requests.get(URL)
+    code = r.text
+    code = code.split("\n")
+    lines = []
+    for line in code:
+        lines.append(line.replace("\r", ""))
+    return lines
+
+def getVersion():
+    with open("version.json", "r") as f:
+        j = json.loads(f.read())
+        return j["version"]
+  
+def setVersion(v):
+    j = {
+        "version": v
+    }
     
-update()
+    with open("version.json", "w") as f:
+        f.write(json.dumps(j))
+    
+def askForData():
+    user = input("Enter the bot's username > ")
+    pas = input("Enter the bot's password > ")
+    
+    j = {
+        "version": mostRecentVersion,
+        "username": user,
+        "password": pas
+    }
+    
+    with open("version.json", "w") as f:
+        f.write(json.dumps(j))
+    
+def getBotData():
+    with open("version.json", "r") as f:
+        j = json.loads(f.read())
+        return (j["username"], j["password"])
+    
+def main():
+    try:
+        myVersion = getVersion()
+    except:
+        myVersion = 0
+        
+    if mostRecentVersion != myVersion:
+        update()
+        askForData()
+    
+    username, password = getBotData()
+    
+    while True:
+        scratchCommands.scratchCheck(username, password)
+        time.sleep(5)
+
+mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")[0]
 main()
