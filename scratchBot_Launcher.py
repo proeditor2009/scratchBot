@@ -32,13 +32,12 @@ def getFileContents(URL):
 
 def getVersion():
     with open("version.json", "r") as f:
-        f = f.read()
-        j = json.loads(f)
+        j = json.loads(f.read())
         return j["version"]
   
 def setVersion(v):
     j = {
-        "version": v,
+        "version": v
     }
     
     with open("version.json", "w") as f:
@@ -49,29 +48,25 @@ def askForData():
     pas = input("Enter the bot's password > ")
     
     j = {
+        "version": mostRecentVersion,
         "username": user,
         "password": pas
     }
     
-    with open("version.json", "a") as f:
+    with open("version.json", "w") as f:
         f.write(json.dumps(j))
     
 def getBotData():
     with open("version.json", "r") as f:
-        f = f.read()
-        j = json.loads(f)
-        username = j["username"]
-        password = j["password"]
-        return (username, password)
+        j = json.loads(f.read())
+        return (j["username"], j["password"])
     
 def main():
     try:
-        f = open("version.json")
-        f.close()
+        myVersion = getVersion()
     except:
-        setVersion(0)
+        myVersion = 0
         
-    myVersion = getVersion()
     if mostRecentVersion != myVersion:
         update()
         askForData()
@@ -82,5 +77,5 @@ def main():
         scratchCommands.scratchCheck(username, password)
         time.sleep(5)
 
-mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")
+mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")[0]
 main()
