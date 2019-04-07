@@ -8,9 +8,11 @@ def scratchCheck(USER, PASSWORD):
         print("couldn't find user with given username")
 
 def userExists(USER):
-    response = json.loads(requests.post('https://api.scratchstats.com/scratch/users/' + USER))
+    r = requests.get('https://api.scratchstats.com/scratch/users/' + USER)
+    response = json.loads(r.text)
     try:
         x = response['id']
     except:
         return False
     return True
+
