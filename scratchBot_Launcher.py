@@ -5,8 +5,7 @@ import scratchCommands
 
 global mostRecentVersion
 global myVersion
-global username
-global password
+
 
 def update():
     print("Downloading most recent version (" + mostRecentVersion + ")")
@@ -32,22 +31,20 @@ def getFileContents(URL):
     return lines
 
 def getVersion():
-    f = open("version.json", "r")
-    f = f.read()
-    j = json.loads(f)
-    f.close()
-    return j["version"]
+    with open("version.json", "r") as f:
+        f = f.read()
+        j = json.loads(f)
+        return j["version"]
   
 def setVersion(v):
     j = {
         "version": v,
     }
     
-    f = open("version.json", "w")
-    f.write(json.dumps(j))
-    f.close()
+    with open("version.json", "w") as f:
+        f.write(json.dumps(j))
     
-def askForData:
+def askForData():
     user = input("Enter the bot's username > ")
     pas = input("Enter the bot's password > ")
     
@@ -56,17 +53,16 @@ def askForData:
         "password": pas
     }
     
-    f = open("version.json", "a")
-    f.write(json.dumps(j))
-    f.close()
+    with open("version.json", "a") as f:
+        f.write(json.dumps(j))
     
 def getBotData():
-    f = open("version.json", "r")
-    f = f.read()
-    j = json.loads(f)
-    f.close()
-    username = j["username"]
-    password = j["password"]
+    with open("version.json", "r") as f:
+        f = f.read()
+        j = json.loads(f)
+        username = j["username"]
+        password = j["password"]
+        return (username, password)
     
 def main():
     try:
@@ -75,16 +71,16 @@ def main():
     except:
         setVersion(0)
         
-    mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")
     myVersion = getVersion()
-    if mostRecentVersion != myVerion:
+    if mostRecentVersion != myVersion:
         update()
         askForData()
     
-    getBotData()
+    username, password = getBotData()
     
     while True:
         scratchCommands.scratchCheck(username, password)
         time.sleep(5)
 
+mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")
 main()
