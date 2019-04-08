@@ -1,11 +1,8 @@
 import requests
 import json
-import time
-import scratchCommands
 
 global mostRecentVersion
 global myVersion
-
 
 def update():
     print("Downloading most recent version (" + mostRecentVersion + ")")
@@ -56,11 +53,6 @@ def askForData():
     with open("version.json", "w") as f:
         f.write(json.dumps(j))
     
-def getBotData():
-    with open("version.json", "r") as f:
-        j = json.loads(f.read())
-        return (j["username"], j["password"])
-    
 def main():
     try:
         myVersion = getVersion()
@@ -70,12 +62,6 @@ def main():
     if mostRecentVersion != myVersion:
         update()
         askForData()
-    
-    username, password = getBotData()
-    
-    while True:
-        scratchCommands.scratchCheck(username, password)
-        time.sleep(5)
 
 mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")[0]
 main()
