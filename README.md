@@ -8,4 +8,4 @@ Run on the command prompt: `pip install scratchapi` and `pip install requests`
 
 Download `scratch_Launcher.py`
 
-Then, you will be able to run the ScratchBot
+Then, you will be able to use the ScratchBot
