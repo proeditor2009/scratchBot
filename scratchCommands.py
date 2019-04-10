@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import scratchapi
 import requests
 import json
 import sys
@@ -6,13 +7,46 @@ import sys
 COMMANDS = ["/follow", "/info"]
 
 def run(USER, PASSWORD, COMMAND):
-    command = getCommand(COMMAND)
-    if command != None:
-        print(command)
+    com = COMMAND.split()
+    command = getCommand(com)
+    if command == None:
+        return
+    if com[0] == "/follow":
+        fol(com[1], USER, PASSWORD)
+    elif com[0] == "/info":
+        info(com[1], USER, PASSWORD)
+
+def fol(USER, BOTUSER, PASSWORD):
+    if userExists(USER):
+        with open("following.txt", "a") as f:
+            fol = f.read()
+            if not USER in fol:
+                scratch = scratchapi.ScratchUserSession(BOTUSER, PASSWORD)
+                scratch.users.follow(USER)
+                print("Command Executed")
+                f.write(USER)
+            else:
+                print("Have already followed user")
+    else:
+        print("Could not find user with given username")
+
+def info(PROJECT, BOTUSER, PASSWORD):
+    try:
+        p = requests.get("https://api.scratch.mit.edu/projects/" + PROJECT)
+        p = json.loads(p.text)
+        views = p["stats"]["views"]
+        loves = p["stats"]["loves"]
+        favorites = p["stats"]["favorites"]
+        comments = p["stats"]["comments"]
+        remixes = p["stats"]["remixes"]
+        title = p["title"]
+        creator = p["author"]["username"]
+        print("Info for \"" + title + "\" by " + creator + ": Views: " + str(views) + "--- Loves: " + str(loves) + " --- Favorites: " + str(favorites) + " --- Comments: " + str(comments) + " --- Remixes: " + str(remixes))
+    except:
+        print("Could not execute command") 
 
 def getCommand(COMMAND):
-    com = COMMAND.split()
-    if com[0] in COMMANDS and len(com) == 2:
+    if COMMAND[0] in COMMANDS and len(COMMAND) == 2:
         return COMMAND
     return
 
@@ -64,7 +98,7 @@ def getBotData():
         return (j["username"], j["password"])
 
 def main():
-    if len(sys.argv) == 0:
+    if len(sys.argv) == 1:
         runPrompt()
     else:
         runFromProfile(sys.argv[1])
