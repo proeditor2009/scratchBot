@@ -5,13 +5,13 @@
 This requires you to have Python 3 and Pip installed.
 
 On the command prompt: 
-```python
+```bash
 pip install scratchapi
 ```
 
 and 
 
-```python
+```bash
 pip install requests
 ```
 
