@@ -15,6 +15,19 @@ and
 pip install requests
 ```
 
-Download `scratch_Launcher.py`
+Download `scratch_Launcher.py` using Github, and run it:
+```bash
+python scratch_Launcher.py
+```
 
+## Using Bot
 
+On the command prompt:
+(To run from console)
+```bash
+python scratchCommands.py
+```
+(To run from profile)
+```bash
+python scratchCommands.py *username*
+```
