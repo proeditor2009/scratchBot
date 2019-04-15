@@ -5,6 +5,8 @@ import json
 import sys
 
 COMMANDS = ["/follow", "/info"]
+ASKERUSER = ""
+mode = ""
 
 def run(USER, PASSWORD, COMMAND):
     com = COMMAND.split()
@@ -23,8 +25,12 @@ def fol(USER, BOTUSER, PASSWORD):
             if not USER in fol:
                 scratch = scratchapi.ScratchUserSession(BOTUSER, PASSWORD)
                 scratch.users.follow(USER)
-                print("Command Executed")
+                print("ScratchBot followed " + USER)
                 f.write(USER)
+                if mode == "prompt":
+                    scratch.users.comment(BOTUSER, "ScratchBot followed " + USER)
+                else:
+                    scratch.users.comment(ASKERUSER, "ScratchBot followed " + USER)
             else:
                 print("Have already followed user")
     else:
@@ -41,9 +47,17 @@ def info(PROJECT, BOTUSER, PASSWORD):
         remixes = p["stats"]["remixes"]
         title = p["title"]
         creator = p["author"]["username"]
-        print("Info for \"" + title + "\" by " + creator + ": Views: " + str(views) + "--- Loves: " + str(loves) + " --- Favorites: " + str(favorites) + " --- Comments: " + str(comments) + " --- Remixes: " + str(remixes))
+        info = "Info for \"" + title + "\" by " + creator + ":\nViews: " + str(views) + "\nLoves: " + str(loves) + "\nFavorites: " + str(favorites) + "\nComments: " + str(comments) + "\nRemixes: " + str(remixes)
+        print(info)
+        try:
+            if mode == "prompt":
+                scratch.users.comment(BOTUSER, info)
+            else:
+                scratch.users.comment(ASKERUSER, info)
+        except:
+            pass
     except:
-        print("Could not execute command") 
+        print("Project not found") 
 
 def getCommand(COMMAND):
     if COMMAND[0] in COMMANDS and len(COMMAND) == 2:
@@ -56,14 +70,18 @@ def runFromProfile(USER):
     r = requests.get(getUrlFromUser(USER, "https://scratch.mit.edu/site-api/comments/user/"))
     soup = BeautifulSoup(r.text, "html.parser")
     comms = soup.findAll("div", class_='content')
+    i = 0
 
     for comm in comms:
         text = comm.text
         text = text.replace("\n", "")
         words = text.split()
+        asker = soup.findAll("a")[i]
+        ASKERUSER = asker.text
         for word in words:
             if word in COMMANDS:
                 run(username, password, text)
+        i += 1
 
 def getUrlFromUser(USER, URL):
     username = USER
@@ -86,10 +104,11 @@ def userExists(USER):
 def runPrompt():
     username, password = getBotData()
     
+    if not userExists(username):
+        print("Could not find user with given username")
+        quit()
+
     while True:
-        if not userExists(username):
-            print("Could not find user with given username")
-            quit()
         run(username, password, str(input("ScratchBot > ")))
 
 def getBotData():
@@ -99,8 +118,10 @@ def getBotData():
 
 def main():
     if len(sys.argv) == 1:
+        mode = "prompt"
         runPrompt()
     else:
+        mode = "profile"
         runFromProfile(sys.argv[1])
     
 main()
