@@ -6,13 +6,13 @@
 
 On the command prompt: 
 ```bash
-pip install scratchapi
+> pip install scratchapi
 ```
 
 and 
 
 ```bash
-pip install requests
+> pip install requests
 ```
 
 Download `scratch_Launcher.py` using Github, and run it:
@@ -25,9 +25,9 @@ python scratch_Launcher.py
 On the command prompt:
 (To run from console)
 ```bash
-python scratchCommands.py
+> python scratchCommands.py
 ```
 (To run from profile)
 ```bash
-python scratchCommands.py *username*
+> python scratchCommands.py *username*
 ```
