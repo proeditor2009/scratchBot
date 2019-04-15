@@ -17,7 +17,7 @@ and
 
 Download `scratch_Launcher.py` using Github, and run it:
 ```bash
-python scratch_Launcher.py
+> python scratch_Launcher.py
 ```
 
 ## Using Bot
