@@ -15,9 +15,10 @@ and
 > pip install requests
 ```
 
-Download `scratch_Launcher.py` using Github, and run it:
+Download `src\launcher.py` using Github, and run it:
 ```bash
-> python scratch_Launcher.py
+> cd src
+> python launcher.py
 ```
 
 ## Using Bot
