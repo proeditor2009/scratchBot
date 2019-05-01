@@ -63,5 +63,5 @@ def main():
         update()
         askForData()
 
-mostRecentVersion = getFileContents("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/version.txt")[0]
+mostRecentVersion = getFileContents("https://raw.githubusercontent.com/Snipet/scratchBot/master/version.txt")[0]
 main()
