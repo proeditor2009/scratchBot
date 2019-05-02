@@ -1,4 +1,5 @@
 import requests
+import scratchapi
 import json
 
 global mostRecentVersion
@@ -41,8 +42,16 @@ def setVersion(v):
         f.write(json.dumps(j))
     
 def askForData():
-    user = input("Enter the bot's username > ")
-    pas = input("Enter the bot's password > ")
+    isValid = 0
+    while isValid != 1:
+        user = input("Enter the bot's username > ")
+        pas = input("Enter the bot's password > ")
+        try:
+            scratch = scratchapi.ScratchUserSession(user, pas)
+            isValid = 1
+        except:
+            print("Invalid username or password")
+            isValid = 0
     
     j = {
         "version": mostRecentVersion,
@@ -62,6 +71,7 @@ def main():
     if mostRecentVersion != myVersion:
         update()
         askForData()
+        print("Downloading process executed")
 
 mostRecentVersion = getFileContents("https://raw.githubusercontent.com/Snipet/scratchBot/master/version.txt")[0]
 main()
