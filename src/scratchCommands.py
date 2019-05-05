@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import scratchapi
+import launcher
 import requests
 import json
 import sys
@@ -117,6 +118,7 @@ def getBotData():
         return (j["username"], j["password"])
 
 def main():
+    launcher.main()
     if len(sys.argv) == 1:
         mode = "prompt"
         runPrompt()
