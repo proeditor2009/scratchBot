@@ -1,15 +1,15 @@
 import requests
 import scratchapi
 import json
+import sys
 
 global mostRecentVersion
-global myVersion
+global version
 
-def update():
-    print("Downloading most recent version (" + mostRecentVersion + ")")
-    getFile("https://raw.githubusercontent.com/BonfireScratch/scratchBot/master/scratchCommands.py", "scratchCommands.py")
+def update(VERSION):
+    print("Downloading most recent version (" + VERSION + ")")
+    getFile("https://raw.githubusercontent.com/Snipet/scratchBot/master/src/scratchCommands.py", "scratchCommands.py")
     setVersion(mostRecentVersion)
-    print("ScratchBot has been downloaded")
 
 def getFile(URL, FILE):
     lines = getFileContents(URL)
@@ -27,11 +27,6 @@ def getFileContents(URL):
     for line in code:
         lines.append(line.replace("\r", ""))
     return lines
-
-def getVersion():
-    with open("version.json", "r") as f:
-        j = json.loads(f.read())
-        return j["version"]
   
 def setVersion(v):
     j = {
@@ -51,7 +46,6 @@ def askForData():
             isValid = 1
         except:
             print("Invalid username or password")
-            isValid = 0
     
     j = {
         "version": mostRecentVersion,
@@ -64,14 +58,22 @@ def askForData():
     
 def main():
     try:
-        myVersion = getVersion()
+        with open("version.json", "r") as f:
+            data = json.loads(f.read())
+            version = data["version"]
     except:
-        myVersion = 0
+        version = None
         
-    if mostRecentVersion != myVersion:
-        update()
-        askForData()
-        print("Downloading process executed")
+    if mostRecentVersion != version:
+        if version:
+            inp = str(input("A new version of ScratchBot is available. Would you like to download it? > (yes/no) "))
+            if inp == "yes":
+                update(mostRecentVersion)
+                print("ScratchBot has been updated")
+        else:
+            update(mostRecentVersion)
+            askForData()
+            print("ScratchBot has been downloaded")
 
 mostRecentVersion = getFileContents("https://raw.githubusercontent.com/Snipet/scratchBot/master/version.txt")[0]
 main()
