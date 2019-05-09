@@ -9,10 +9,13 @@ On the command prompt:
 > pip install scratchapi
 ```
 
-and 
-
 ```bash
 > pip install requests
+```
+and
+
+```bash
+> pip install bs4
 ```
 
 Download `src\launcher.py` using Github, and run it:
