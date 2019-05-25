@@ -6,22 +6,7 @@
 
 On the command prompt: 
 ```bash
-> pip install scratchapi
-```
-
-```bash
-> pip install requests
-```
-and
-
-```bash
-> pip install bs4
-```
-
-Download `src\launcher.py` using Github, and run it:
-```bash
-> cd src
-> python launcher.py
+> pip install git+https://github.com/Snipet/scratchBot/
 ```
 
 ## Using Bot
