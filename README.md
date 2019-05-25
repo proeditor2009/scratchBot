@@ -7,7 +7,7 @@
 On the command prompt: 
 ```bash
 > git clone https://github.com/Snipet/scratchBot/
-> pip install requirements.txt
+> pip install -r requirements.txt
 ```
 
 ## Using Bot
