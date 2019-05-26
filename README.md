@@ -7,6 +7,7 @@
 On the command prompt: 
 ```bash
 > git clone https://github.com/Snipet/scratchBot/
+> cd scratchBot
 > pip install -r requirements.txt
 ```
 
