@@ -1,3 +1,4 @@
 scratchapi
 requests
 BeautifulSoup4
+cryptography
