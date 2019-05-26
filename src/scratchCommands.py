@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import scratchapi
 import launcher
 import requests
+import encryptor
 import json
 import sys
 
@@ -115,7 +116,9 @@ def runPrompt():
 def getBotData():
     with open("version.json", "r") as f:
         j = json.loads(f.read())
-        return (j["username"], j["password"])
+        username = j["username"]
+        pas = str(encryptor.decrypt(str.encode(j["password"])), 'utf-8')
+        return username, pas
 
 def main():
     launcher.main()
