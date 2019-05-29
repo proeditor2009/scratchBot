@@ -56,6 +56,7 @@ def main():
         version = None
         
     if mostRecentVersion != version:
+        j = {}
         if version:
             inp = str(input("A new version of ScratchBot is available. Would you like to download it? > (yes/no) "))
             if inp == "yes":
@@ -72,5 +73,4 @@ def main():
             j["version"] = mostRecentVersion
             askForData()
 
-j = {}
 main()
