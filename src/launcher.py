@@ -36,10 +36,10 @@ def askForData():
             isValid = True
         except:
             print("Invalid username or password")
-    
-    j["username"] = user
-    j["password"] = str(encryptor.encrypt(pas), 'utf-8')
-    
+            
+    return user, str(encryptor.encrypt(pas), "utf-8")
+
+def insertData(j):
     with open("version.json", "w") as f:
         f.write(json.dumps(j))
     
@@ -51,26 +51,24 @@ def main():
             data = json.loads(f.read())
             version = data["version"]
             username = data["username"]
-            pas = data["password"]
+            password = data["password"]
     except:
         version = None
         
     if mostRecentVersion != version:
-        j = {}
         if version:
             inp = str(input("A new version of ScratchBot is available. Would you like to download it? > (yes/no) "))
             if inp == "yes":
                 print("Downloading most recent version (" + mostRecentVersion + ")")
                 getFile("https://raw.githubusercontent.com/Snipet/scratchBot/master/src/scratchCommands.py", "scratchCommands.py")
                 
-                j = {"version": mostRecentVersion, "username": username, "password": pas}
-
-                with open("version.json", "w") as f:
-                    f.write(json.dumps(j))
+                j = {"version": mostRecentVersion, "username": username, "password": password}
+                insertData(j)
                 
                 print("ScratchBot has been updated")
         else:
-            j["version"] = mostRecentVersion
-            askForData()
+            username, password = askForData()
+            j = {"version": mostRecentVersion, "username": username, "password": password}
+            insertData(j)
 
 main()
