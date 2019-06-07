@@ -57,7 +57,7 @@ def info(PROJECT, BOTUSER, PASSWORD):
             else:
                 scratch.users.comment(ASKERUSER, info)
         except:
-            pass
+            print("Could not comment on user profile")
     except:
         print("Project not found") 
 
